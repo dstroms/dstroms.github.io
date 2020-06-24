@@ -1,0 +1,248 @@
+<!-- Navbar -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/" ng-click="reset()">booksforbuffs</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+          <li><a href="#/" ng-click="reset()">Home</a></li>
+          <li><a href="#/how-it-works" ng-click="reset()">How it works</a></li>
+          </ul>
+
+
+          <form class="top-search">
+            <input ng-model="query" type="text" placeholder="search for ISBN, title, or author" />
+            <input type="submit" ng-click="query_search()" value="search" class="btn btn-gold" role="button">
+            <input type="submit" class="btn btn-default" role="button" ng-click="reset()" value="reset">
+        </form>
+
+
+        </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+      <div id="share">
+        <div class="fb-share-button" data-href="https://booksforbuffs.com/" data-layout="button_count" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fbooksforbuffs.com%2F&amp;src=sdkpreparse">Share</a></div>
+
+        <a class="twitter-share-button"
+        href="https://twitter.com/intent/tweet?text=The best prices on textbooks for Boulder students: https://booksforbuffs.com/"
+        data-size="large" target="_blank">
+        Tweet</a>
+      </div>
+
+<div ng-show="home">
+
+    <div class="half-width center">
+      <div class="home-icons">
+        
+        <!--<div class="icon">
+          <img ng-src="/img/icon.png">
+          <p>search</p>
+        </div>
+
+        <div class="icon">
+          <img ng-src="/img/icon.png">
+          <p>compare</p>
+        </div>-->
+
+        <div class="icon">
+          <img ng-src="/img/icon.png">
+          <p>save $$$ on textbooks</p>
+        </div>
+      </div>
+
+    </div>
+    <div id="home-search" class="card">
+      <form>
+        <input ng-model="query" type="text" placeholder="enter an ISBN, title, or author" />
+       
+        <input type="submit" ng-click="query_search()" value="search" class="btn btn-gold" role="button">
+        <input type="submit" class="btn btn-default" role="button" ng-click="reset()" value="reset">
+        </form>
+      </div>
+    
+
+
+    <div class="intro half-width center">
+      <p>BooksForBuffs searches for all available used and new copies of your textbook at multiple retailers at once, including Amazon, Ecampus, Alibris, Barnes & Noble, Biblio, and more. Results are automatically sorted with the cheapest books on top, so you don't even have to scroll to see the best price.</p>
+      <p><strong>We save you time and money.</strong> Fuck expensive textbooks.</p>
+
+      <hr>
+
+      <p>BooksForBuffs.com is 100% free to use - we make money off of book retailers, not students. <a href="#/how-it-works">Learn more</a>.</p>
+      <p>BooksForBuffs.com is not affiliated in any way with the University of Colorado Boulder.</p>
+    </div>
+  </div>
+
+{{url}}
+
+<div id="book_info" ng-show="show_book_info">
+
+
+
+  <img class="thumbnail" ng-src="{{data.items[0].volumeInfo.imageLinks.thumbnail}}" />
+
+  <ul>
+    <li><h2>{{data.items[0].volumeInfo.title}}</h2></li>
+    <li><span class="bold">Author(s):</span> {{data.items[0].volumeInfo.authors[0]}}</li>
+    <li><span class="bold">Publisher:</span> {{data.items[0].volumeInfo.publisher}}</li>
+    <li><span class="bold">Publish date:</span> {{data.items[0].volumeInfo.publishedDate}}</li>
+    <li><span class="bold">Page count:</span> {{data.items[0].volumeInfo.pageCount}}</li>
+    <li><span class="bold">ISBN:</span> {{data.items[0].volumeInfo.industryIdentifiers[1].identifier}}</li>
+    <!--<li><span class="bold">Description:</span> {{data.items[0].volumeInfo.description | limitTo: 300}}...</li>-->
+    <li><span class="bold"><a href="{{data.items[0].volumeInfo.previewLink}}" target="_blank">Read for free on Google Books</a></span></li>
+  </ul>
+
+</div>
+
+
+
+
+<div class="spinner" ng-show="text_query_loading">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+<div ng-show="show_text_query_results">
+  <h2>Search results</h2>
+  <hr>
+  
+
+  
+  <div class="text-results card" ng-repeat="book in books">
+    <img class="thumbnail" ng-src="{{book.volumeInfo.imageLinks.smallThumbnail}}" />
+    <ul>
+      <li><span class="bold capital"><a href="#/{{book.volumeInfo.industryIdentifiers[0].identifier}}">{{book.volumeInfo.title}}</a></span></li>
+
+
+
+      <!--<li><input type="text" ng-model="books.book.isbn" ng-value="" /></li>-->
+
+
+      <li><span class="bold">Author(s):</span> {{book.volumeInfo.authors[0]}}</li>
+      <li><span class="bold">Publisher:</span> {{book.volumeInfo.publisher}}</li>
+      <li><span class="bold">Publish date:</span> {{book.volumeInfo.publishedDate}}</li>
+      <li><span class="bold">Page count:</span> {{book.volumeInfo.pageCount}}</li>
+      <li><span class="bold">ISBN:</span> {{book.volumeInfo.industryIdentifiers[0].identifier}}</li>
+
+    </ul>
+  </div>
+</div>
+
+
+<br>
+<!--<div class="alert alert-info">
+    <p>Sort Type: {{ sortType }}</p>
+    <p>Sort Reverse: {{ sortReverse }}</p>
+    <p>Search Query: {{ searchFish }}</p>
+  </div>-->
+  
+
+<div class="spinner" ng-show="loading1 && loading2">
+    <div class="double-bounce1"></div>
+    <div class="double-bounce2"></div>
+</div>
+
+<div ng-show="getfail1 && getfail2">
+  <p>Something went wrong. Please search for <a ng-click="query_search()" class="search-again">{{query}}</a> again or or try again later.</p>
+</div>
+
+<div ng-show="show_shopping_results">
+  <!--<div class="section-header"><h2>Shopping results</h2></div>-->
+
+  <table border="1" width="100%" class="font-small">
+      <tr>
+        <th class="text-right">price</th>
+        <th>shipping</th>
+        <th>total</th>
+        <th>condition</th>
+        <th>store</th>
+      </tr>
+
+      <tr ng-repeat="used in used">
+        <td class="bold text-right font-large"><a href="{{used.link}}" target="_blank">${{used.price}}</a></td>
+        <td>${{used.shipping_ground}}</td>
+        <td>${{used.total_price}}</td>
+        <td>{{used.condition_text}}</td>
+        <td>{{used.merchant_name}}</td>
+      </tr>
+
+      <tr ng-repeat="result in new_results">
+        <td class="bold text-right font-large"><a href="{{result.link}}" target="_blank">${{result.price}}</a></td>
+        <td>${{result.shipping_ground}}</td>
+        <td>${{result.total_price}}</td>
+        <td>{{result.condition_text}}</td>
+        <td>{{result.merchant_name}}</td>
+      </tr>
+
+  </table>
+
+  <!--<br><hr><br>
+
+   // test two //
+  <table border="1" width="100%" class="font-small">
+      <tr>
+        <th>store</th>
+        <th>condition</th>
+        <th>price</th>
+        <th>shipping</th>
+        <th>total</th>
+      </tr>
+
+      <tr ng-repeat="used in used">
+        <td>{{used.merchant_name}}</td>
+        <td>{{used.condition_text}}</td>
+        <td>${{used.price}}</td>
+        <td>${{used.shipping_ground}}</td>
+        <td class="bold font-large total_price"><a href="{{used.link}}" target="_blank">${{used.total_price}}</a></td>
+      </tr>
+
+      <tr ng-repeat="result in new_results">
+        <td>{{result.merchant_name}}</td>
+        <td>{{result.condition_text}}</td>
+        <td>${{result.price}}</td>
+        <td>${{result.shipping_ground}}</td>
+        <td class="bold font-large total_price"><a href="{{result.link}}" target="_blank">${{result.total_price}}</a></td>
+      </tr>
+
+  </table>-->
+
+
+  <!--// test three //
+  <table border="1" width="100%">
+      <tr>
+        <th>price</th>
+        <th>shipping</th>
+        <th>total</th>
+        <th>condition</th>
+        <th>store</th>
+      </tr>
+      <tr ng-repeat="result in new_results">
+        <td class="bold"><a href="{{result.link}}" target="_blank">{{result.price}}</a></td>
+        <td>{{result.shipping_ground}}</td>
+        <td>{{result.total_price}}</td>
+        <td>{{result.condition_text}}</td>
+        <td>{{result.merchant_name}}</td>
+      </tr>
+
+      <tr ng-repeat="used in used">
+        <td class="bold"><a href="{{used.link}}" target="_blank">{{used.price}}</a></td>
+        <td>{{used.shipping_ground}}</td>
+        <td>{{used.total_price}}</td>
+        <td>{{used.condition_text}}</td>
+        <td>{{used.merchant_name}}</td>
+      </tr>
+  </table>-->
+
+
+
+    <!--<a href="https://www.amazon.com/gp/search?ie=UTF8&keywords={{query}}&tag=wvu057-20&id=wvusedbooks-20&index=books&ie=UTF8&linkCode=ur2&camp=1789&creative=9325" target="_blank">{{query}}</a>-->
+
+
+</div>
